@@ -18,12 +18,24 @@ public class JpaMain {
 //            member.setName("HelloJPA");  //수정
 ////            em.persist(member);  //JPA에 저장
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.name = " + member.getName());
+//            }
+//            //비영속
+//            Member member = new Member();
+//            member.setId(100L);
+//            member.setName("HelloJPA");
+//
+//            //영속화
+//            em.persist(member);
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+
+            Member member = em.find(Member.class, 150L);
+            member.setName("zzzzz");
+
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
