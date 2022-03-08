@@ -15,26 +15,23 @@ public class JpaMain {
 
         try {  //에러가 없을시
 
-            Member member1 = new Member();
-            member1.setUsername("A");
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            Member member2 = new Member();
-            member2.setUsername("B");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
 
-            Member member3 = new Member();
-            member3.setUsername("C");
+            em.flush();
+            em.clear();
 
-            System.out.println("==========");
+            Member findMember = em.find(Member.class, member.getId());
 
-            em.persist(member1);
-            em.persist(member2);
-            em.persist(member3);
+            Team findTeam = findMember.getTeam();
 
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-
-            System.out.println("==========");
+            System.out.println("findTeam.getName() = " + findTeam.getName());
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
