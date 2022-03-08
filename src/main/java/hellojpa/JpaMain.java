@@ -17,22 +17,16 @@ public class JpaMain {
 
             Team team = new Team();
             team.setName("TeamA");
+//            team.getMembers().add(member); 연관관계 주인이 아닌것에 값을 넣음
             em.persist(team);
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+            member.changeTeam(team);  //연관관계 주인에만 값을 넣음
             em.persist(member);
 
             em.flush();
             em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
-
-            for (Member m: members) {
-                System.out.println("m.getUsername() = " + m.getUsername());
-            }
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
