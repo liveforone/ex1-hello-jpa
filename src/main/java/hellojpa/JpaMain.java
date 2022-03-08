@@ -28,10 +28,11 @@ public class JpaMain {
             em.clear();
 
             Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
 
-            Team findTeam = findMember.getTeam();
-
-            System.out.println("findTeam.getName() = " + findTeam.getName());
+            for (Member m: members) {
+                System.out.println("m.getUsername() = " + m.getUsername());
+            }
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
