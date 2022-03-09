@@ -13,12 +13,13 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
-
     @ManyToOne  //멤버 입장에서 Many
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @OneToOne  //일대일 양방향
+    @JoinColumn(name = "LOCKER_ID")  //fk를 가지고 있으면 alter쿼리 나감
+    private Locker locker;
 
     public Long getId() {
         return id;
