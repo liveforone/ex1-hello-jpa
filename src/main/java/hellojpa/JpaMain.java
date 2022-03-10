@@ -14,19 +14,18 @@ public class JpaMain {
         tx.begin();  //트랜잭션 시작
 
         try {  //에러가 없을시
+            Movie movie = new Movie();
+            movie.setDirector("a");
+            movie.setActor("b");
+            movie.setName("바람과 함께 사라지다");
+            movie.setPrice(10000);
 
-            Team team = new Team();
-            team.setName("TeamA");
-//            team.getMembers().add(member); 연관관계 주인이 아닌것에 값을 넣음
-            em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member1");
-            member.changeTeam(team);  //연관관계 주인에만 값을 넣음
-            em.persist(member);
+            em.persist(movie);
 
             em.flush();
             em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
