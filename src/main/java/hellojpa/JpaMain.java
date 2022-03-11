@@ -17,14 +17,14 @@ public class JpaMain {
         try {  //에러가 없을시
 
             Member member = new Member();
-            member.setUsername("user1");
-            member.setCreatedBy("kim");
-            member.setCreateDate(LocalDateTime.now());
-
+            member.setUsername("member1");
             em.persist(member);
-
+            
             em.flush();
             em.clear();
+
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember.getClass() = " + findMember.getClass());
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
