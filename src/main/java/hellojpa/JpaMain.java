@@ -16,15 +16,20 @@ public class JpaMain {
 
         try {  //에러가 없을시
 
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
-            
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setTeam(team);
+            em.persist(member1);
+
             em.flush();
             em.clear();
 
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("findMember.getClass() = " + findMember.getClass());
+            Member findMember = em.find(Member.class, member1.getId());
+            System.out.println(findMember.getTeam().getName());
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
