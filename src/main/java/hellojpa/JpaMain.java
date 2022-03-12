@@ -16,12 +16,15 @@ public class JpaMain {
 
         try {  //에러가 없을시
 
+            Address address = new Address("city", "street", "zipcode");  //기존 값
+
             Member member = new Member();
             member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            member.setWorkdPeriod(new Period());
-
+            member.setHomeAddress(address);
             em.persist(member);
+
+            Address newAddress = new Address("NewCity", address.getStreet(), address.getZipcode());  //새값
+            member.setHomeAddress(newAddress);  //다시 통째로 집어넣어야함
 
             tx.commit();  //커밋해줌
         } catch (Exception e) {  //에러발생하면 롤백
