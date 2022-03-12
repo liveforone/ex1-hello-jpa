@@ -1,11 +1,12 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member{
 
     @Id
     @GeneratedValue
@@ -15,9 +16,13 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)  //멤버 입장에서 Many
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    //기간
+    @Embedded
+    private Period workdPeriod;
+
+    //주소
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
         return id;
@@ -35,16 +40,19 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkdPeriod() {
+        return workdPeriod;
     }
 
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);  //연관관계 편의 메서드
+    public void setWorkdPeriod(Period workdPeriod) {
+        this.workdPeriod = workdPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
